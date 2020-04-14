@@ -48,7 +48,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.java.rle.RleMain</mainClass>
+                            <mainClass>main.java.rle.Rle</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
