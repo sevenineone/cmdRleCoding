@@ -18,14 +18,12 @@ public class Rle {
                 int lastSym = reader.read();
                 while (sym != -1) {
                     int num = 1;
-                    //lastSym
                     while (true) {
                         sym = reader.read();
                         if (sym == lastSym) num++;
                         else break;
                         lastSym = sym;
                     }
-
                     if (num == 1) {
                         if (check) {
                             writer.write('-');
@@ -34,6 +32,11 @@ public class Rle {
                         }
                     } else {
                         check = true;
+                        while (num > 9) {
+                            num -= 9;
+                            writer.write(Integer.toString(9));
+                            writer.write(lastSym);
+                        }
                         writer.write(Integer.toString(num));
                     }
                     writer.write(lastSym);
@@ -43,10 +46,35 @@ public class Rle {
         }
     }
 
-    public static void rleDecode(InputStream in, OutputStream out) throws IOException {
-//TODO
-    }
+    public void rleDecode(InputStream in, OutputStream out) throws IOException {
+        try (InputStreamReader reader = new InputStreamReader(in)) {
+            try (OutputStreamWriter writer = new OutputStreamWriter(out)) {
+                int num;
+                int sym = reader.read();
+                boolean check = false;
+                while (sym != -1) {
+                    num = sym;
+                    if (num == '-') {
+                        sym = reader.read();
+                        sym = reader.read();
+                        while (sym > 57 || sym < 49){
+                            writer.write(sym);
+                            sym = reader.read();
+                        }
+                    }
+                    else{
+                        num -= 48;
+                        sym = reader.read();
+                        for (int i = 0; i < num; i++) {
+                            writer.write(sym);
+                        }
+                        sym = reader.read();
+                    }
 
+                }
+            }
+        }
+    }
 
     public void code(String inputName, String outputName) throws IOException {
         try (FileInputStream inputStream = new FileInputStream(inputName)) {
@@ -59,7 +87,7 @@ public class Rle {
     }
 
     public static void main(String[] args) throws IOException {
-        Rle rle = new Rle(true);
+        Rle rle = new Rle(false);
         rle.code("C:\\Users\\alexe\\IdeaProjects\\RleCoding\\src\\main\\java\\rle\\input test", "output.txt");
     }
 }
