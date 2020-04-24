@@ -1,8 +1,6 @@
 package main.java.rle;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
@@ -12,10 +10,10 @@ import org.kohsuke.args4j.Option;
 
 public class RleLaunch {
     @Option(name = "-z", usage = "Encode")
-    private boolean charInd;
+    private boolean encode;
 
     @Option(name = "-u", usage = "decode", forbids = {"-z"})
-    private boolean worldInd;
+    private boolean decode;
 
     @Option(name = "-out", metaVar = "OutputName", usage = "Output file name")
     private String outName;
@@ -24,9 +22,24 @@ public class RleLaunch {
     private String inName;
 
     public static void main(String[] args) {
-        //TODO
+        new RleLaunch().launch(args);
     }
-    //launch TODO
+    private void launch(String[] args) {
+        CmdLineParser parser = new CmdLineParser(this);
 
-
+        try {
+            parser.parseArgument(args);
+        } catch (CmdLineException e) {
+            System.err.println(e.getMessage());
+            System.err.println("java -jar RleCoding.jar -z|-u -out OutputName InputName");
+            parser.printUsage(System.err);
+            return;
+        }
+        Rle rle = new Rle(encode);
+        try {
+            rle.code(inName, outName);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }

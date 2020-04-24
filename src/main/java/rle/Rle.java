@@ -57,12 +57,11 @@ public class Rle {
                     if (num == '-') {
                         sym = reader.read();
                         sym = reader.read();
-                        while (sym > 57 || sym < 49){
+                        while (sym > 57 || sym < 49) {
                             writer.write(sym);
                             sym = reader.read();
                         }
-                    }
-                    else{
+                    } else {
                         num -= 48;
                         sym = reader.read();
                         for (int i = 0; i < num; i++) {
@@ -79,15 +78,10 @@ public class Rle {
     public void code(String inputName, String outputName) throws IOException {
         try (FileInputStream inputStream = new FileInputStream(inputName)) {
             try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
-                if (isCode)
+                if (this.isCode)
                     rleEncode(inputStream, outputStream);
                 else rleDecode(inputStream, outputStream);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Rle rle = new Rle(false);
-        rle.code("C:\\Users\\alexe\\IdeaProjects\\RleCoding\\src\\main\\java\\rle\\input test", "output.txt");
     }
 }
