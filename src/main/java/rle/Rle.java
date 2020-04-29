@@ -39,6 +39,7 @@ public class Rle {
                 writer.write(Integer.toString(num));
                 writer.write(mid);
             } else {
+                if (num > 9) num++;
                 while (num > 9) {
                     num -= 9;
                     writer.write(Integer.toString(9));
