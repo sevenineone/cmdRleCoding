@@ -24,11 +24,16 @@ public class RleLaunch {
     public static void main(String[] args) {
         new RleLaunch().launch(args);
     }
-    private void launch(String[] args) {
+    public void launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
 
         try {
             parser.parseArgument(args);
+            if (encode == decode) {
+                System.err.println("java -jar RleCoding.jar -z|-u -out OutputName InputName");
+                parser.printUsage(System.err);
+                return;
+            }
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             System.err.println("java -jar RleCoding.jar -z|-u -out OutputName InputName");
