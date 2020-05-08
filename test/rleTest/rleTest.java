@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -22,25 +23,27 @@ public class rleTest {
         return contentBuilder.toString();
     }
 
-    private String[] arguments1 = {"-u", "-out", "C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\outputTests\\outTest1",
-            "C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\inputTests\\inTest1"};
+    private String path = new File("").getAbsolutePath();
+
+    private String[] arguments1 = {"-u", "-out", path + "\\test\\outputTests\\outTest1",
+            path + "\\test\\inputTests\\inTest1"};
 
     @Test
     public void test1() {
         new RleLaunch().launch(arguments1);
         String ans1 = "aaabcvdddd\n";
-        String res1 = readInString("C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\outputTests\\outTest1");
+        String res1 = readInString(path + "\\test\\outputTests\\outTest1");
         assertEquals(ans1, res1);
     }
 
-    private String[] arguments2 = {"-z", "-out", "C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\outputTests\\outTest2",
-            "C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\inputTests\\inTest2"};
+    private String[] arguments2 = {"-z", "-out", path + "\\test\\outputTests\\outTest2",
+            path + "\\test\\inputTests\\inTest2"};
 
     @Test
     public void test2() {
         new RleLaunch().launch(arguments2);
         String ans2 = "4b-9asdfghjkl-3qwe9f9f8f-2df9d3d\n";
-        String res2 = readInString("C:\\Users\\alexe\\IdeaProjects\\RleCoding\\test\\outputTests\\outTest2");
+        String res2 = readInString(path + "\\test\\outputTests\\outTest2");
         assertEquals(ans2, res2);
     }
 

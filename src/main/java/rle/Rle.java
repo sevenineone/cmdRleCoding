@@ -13,7 +13,6 @@ public class Rle {
     private void rleEncode(InputStreamReader reader, OutputStreamWriter writer) throws IOException {
         boolean check = true;
         int sym = 0;
-        String mid;
         int lastSym = reader.read();
         while (sym != -1) {
             int num = 1;
@@ -21,23 +20,21 @@ public class Rle {
                 sym = reader.read();
                 if (sym == lastSym) num++;
                 else break;
-                lastSym = sym;
             }
             if (num == 1) {
-                mid = Character.toString(lastSym);
-                mid += Character.toString(sym);
+                StringBuilder mid = new StringBuilder();
+                mid.append(Character.toString(lastSym));
+                mid.append(Character.toString(sym));
                 lastSym = sym;
                 for (int i = 0; i < 8; i++) {
                     sym = reader.read();
                     if (sym == lastSym) break;
                     num++;
-                    mid += Character.toString(sym);
+                    mid.append(Character.toString(sym));
                     lastSym = sym;
                 }
-                mid = mid.substring(0, mid.length() - 1);
-                writer.write('-');
-                writer.write(Integer.toString(num));
-                writer.write(mid);
+                writer.write(Integer.toString(-num));
+                writer.write(mid.toString().substring(0, mid.length() - 1));
             } else {
                 if (num > 9) num++;
                 while (num > 9) {
@@ -60,7 +57,7 @@ public class Rle {
             num = reader.read();
             if (num == '-') {
                 num = reader.read();
-                num -= 48;
+                num -= '0';
                 for (int i = 0; i < num; i++) {
                     sym = reader.read();
                     writer.write(sym);
@@ -76,15 +73,14 @@ public class Rle {
     }
 
     public void code(String inputName, String outputName) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(inputName)) {
-            try (FileOutputStream outputStream = new FileOutputStream(outputName)) {
-                try (InputStreamReader reader = new InputStreamReader(inputStream)) {
-                    try (OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
-                        if (this.isCode)
-                            rleEncode(reader, writer);
-                        else rleDecode(reader, writer);
-                    }
-                }
+        try (FileInputStream inputStream = new FileInputStream(inputName);
+             InputStreamReader reader = new InputStreamReader(inputStream)) {
+            try (FileOutputStream outputStream = new FileOutputStream(outputName);
+                 OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
+
+                if (this.isCode)
+                    rleEncode(reader, writer);
+                else rleDecode(reader, writer);
             }
         }
     }
