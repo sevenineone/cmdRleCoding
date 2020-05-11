@@ -9,7 +9,6 @@ public class Rle {
         this.isCode = isCode;
     }
 
-
     private void rleEncode(InputStreamReader reader, OutputStreamWriter writer) throws IOException {
         boolean check = true;
         int sym = 0;
@@ -73,11 +72,8 @@ public class Rle {
     }
 
     public void code(String inputName, String outputName) throws IOException {
-        try (FileInputStream inputStream = new FileInputStream(inputName);
-             InputStreamReader reader = new InputStreamReader(inputStream)) {
-            try (FileOutputStream outputStream = new FileOutputStream(outputName);
-                 OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
-
+        try (InputStreamReader reader = new InputStreamReader(new FileInputStream(inputName))) {
+            try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(outputName))) {
                 if (this.isCode)
                     rleEncode(reader, writer);
                 else rleDecode(reader, writer);
