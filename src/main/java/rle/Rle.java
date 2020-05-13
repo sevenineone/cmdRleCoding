@@ -33,7 +33,7 @@ public class Rle {
                     lastSym = sym;
                 }
                 writer.write(Integer.toString(-num));
-                writer.write(mid.toString().substring(0, mid.length() - 1));
+                writer.write(mid.substring(0, mid.length() - 1));
             } else {
                 if (num > 9) num++;
                 while (num > 9) {
