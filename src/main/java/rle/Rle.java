@@ -22,14 +22,14 @@ public class Rle {
             }
             if (num == 1) {
                 StringBuilder mid = new StringBuilder();
-                mid.append(Character.toString(lastSym));
-                mid.append(Character.toString(sym));
+                mid.append((char)lastSym);
+                mid.append((char)sym);
                 lastSym = sym;
                 for (int i = 0; i < 8; i++) {
                     sym = reader.read();
                     if (sym == lastSym) break;
                     num++;
-                    mid.append(Character.toString(sym));
+                    mid.append((char)sym);
                     lastSym = sym;
                 }
                 writer.write(Integer.toString(-num));
